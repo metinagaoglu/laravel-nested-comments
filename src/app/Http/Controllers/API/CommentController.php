@@ -13,9 +13,10 @@ class CommentController extends Controller
 
     }
 
-    public function index(Request $request,$id) {
+    public function index(int $id) {
         return Comment::where('post_id',$id)
             ->whereNull('parent_id')
+            ->with('replies')
             ->get();
     }
 }
