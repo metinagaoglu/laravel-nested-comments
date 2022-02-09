@@ -4,14 +4,14 @@
         <div class="row g-5">
             <div class="col-md-8">
                 <h3 class="pb-4 mb-4 fst-italic border-bottom">
-                    Example Blog
+                    Metin Ağaoğlu
                 </h3>
 
                 <article class="blog-post">
-                    <h2 class="blog-post-title">Sample blog post</h2>
+                    <h2 class="blog-post-title">{{ title }}</h2>
                     <p class="blog-post-meta">January 1, 2021 by <a href="#">Mark</a></p>
 
-                    <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, lists, tables, images, code, and more are all supported as expected.</p>
+                    <p>{{ content }}</p>
                     <hr>
                 </article>
 
@@ -64,8 +64,28 @@
 
 <script>
     export default {
+        name: "BlogDetail",
         mounted() {
-            console.log('Component mounted.')
+            this.fetchBlog();
+        },
+        data() {
+            return {
+                title: null,
+                content: null
+            }
+        },
+        methods: {
+            fetchBlog() {
+                axios
+                    .get("/api/post/1",)
+                    .then((res) => {
+                        this.title = res.data.title;
+                        this.content = res.data.content;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            }
         }
     }
 </script>
