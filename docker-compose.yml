@@ -1,0 +1,9 @@
+version: '3'
+services:
+  backend:
+    tty: true
+    image: metinagaoglu/php8_laravel:1.0
+    ports:
+      - '8080:8000'
+    volumes:
+      - './src/:/app/'
