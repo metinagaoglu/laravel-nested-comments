@@ -1,9 +1,19 @@
 version: '3'
 services:
   backend:
+    image: 'metinagaoglu/laravel8-mysql-with-nodejs'
     tty: true
-    image: metinagaoglu/php8_laravel:1.0
     ports:
       - '8080:8000'
+    depends_on:
+      - db
     volumes:
       - './src/:/app/'
+  db:
+    image: mariadb
+    tty: true
+    environment:
+      - MARIADB_USER=comment_user
+      - MARIADB_PASSWORD=my_cool_secret
+      - MARIADB_ROOT_PASSWORD=my_cool_root_secret
+      - MYSQL_DATABASE=comment_spa
