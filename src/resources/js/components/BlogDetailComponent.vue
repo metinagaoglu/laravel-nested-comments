@@ -15,6 +15,14 @@
                     <hr>
                 </article>
 
+                <div v-if="this.isCommentLoaded">
+                    <comment-tree
+                        v-for="reply in this.commentsTree"
+                        :item="reply"
+                    ></comment-tree>
+                </div>
+                <br>
+
                 <nav class="blog-pagination" aria-label="Pagination">
                     <a class="btn btn-outline-primary" href="#">Older</a>
                     <a class="btn btn-outline-secondary disabled">Newer</a>
@@ -67,11 +75,14 @@
         name: "BlogDetail",
         mounted() {
             this.fetchBlog();
+            this.fetchCommentsOfPost();
         },
         data() {
             return {
                 title: null,
-                content: null
+                content: null,
+                isCommentLoaded: false,
+                commentsTree: null,
             }
         },
         methods: {
@@ -85,7 +96,23 @@
                     .catch((err) => {
                         console.log(err);
                     })
+            },
+            fetchCommentsOfPost() {
+                axios
+                    .get("/api/post/1/comment",)
+                    .then((res) => {
+                        this.commentsTree = res.data;
+                        this.isCommentLoaded = true;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
             }
         }
     }
 </script>
+<style>
+.blog-post{
+    width: 100%;
+}
+</style>
