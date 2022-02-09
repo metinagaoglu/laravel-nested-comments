@@ -1,8 +1,20 @@
 <template>
     <div>
         <div style="border: 1px solid black; padding: 5px;" :style="offset">
+            {{ item.username }} <br>
             {{ item.comment }}
         </div>
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="username" class="form-control" placeholder="agaoglumetin" v-model="comment.username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Enter your comment</label>
+                <textarea class="form-control" rows="3" v-model="comment.comment"></textarea>
+            </div>
+            <a v-on:click="submitComment">Submit your comment</a>
+        </form>
 
         <template v-if="item.replies">
             <comment-tree
@@ -31,6 +43,7 @@ export default {
     data() {
         return {
             nodeCount: 0,
+            comment: {}
         };
     },
     computed: {
@@ -57,6 +70,9 @@ export default {
             this.nodeCount++;
             this.$emit('born');
         },
+        submitComment() {
+            console.log(this.comment);
+        }
     },
 };
 </script>
