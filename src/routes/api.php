@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/post/{id}', 'App\Http\Controllers\API\PostController@show');
 Route::get('/post/{id}/comment', 'App\Http\Controllers\API\CommentController@index');
-Route::post('/post/comment', 'App\Http\Controllers\API\CommentController@store');
+Route::post('/post/{id}/comment', 'App\Http\Controllers\API\CommentController@store');

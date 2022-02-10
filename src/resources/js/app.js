@@ -21,6 +21,7 @@ window.Vue = require('vue').default;
 
 Vue.component('blog-detail', require('./components/BlogDetailComponent.vue').default);
 Vue.component('comment-tree', require('./components/CommentTreeComponent.vue').default);
+Vue.component('comment-form', require('./components/CommentFormComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

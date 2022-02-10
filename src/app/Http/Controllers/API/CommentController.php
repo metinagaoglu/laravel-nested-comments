@@ -8,9 +8,11 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
-    public function store($request)
+    public function store(int $id,Request $request)
     {
-
+        //TODO: validation and save
+        echo $id;
+        dd($request->all());
     }
 
     public function index(int $id) {

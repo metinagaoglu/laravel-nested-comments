@@ -10,6 +10,13 @@
                     <footer class="blockquote-footer"><cite title="Source Title">{{ item.username }}</cite></footer>
                 </blockquote>
             </div>
+            <div v-if="replyStatus">
+                <comment-form
+                    :level_of_nested="item.level_of_nested"
+                    :parent_id="item.id"
+                ></comment-form>
+            </div>
+            <a @click="replyComment">Reply this</a>
         </div>
 
     <template v-if="item.replies">
@@ -39,7 +46,8 @@ export default {
     data() {
         return {
             nodeCount: 0,
-            comment: {}
+            comment: {},
+            replyStatus: false,
         };
     },
     computed: {
@@ -66,6 +74,9 @@ export default {
         handleBorn() {
             this.nodeCount++;
             this.$emit('born');
+        },
+        replyComment() {
+            this.replyStatus = true
         }
     },
 };
