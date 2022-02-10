@@ -1,22 +1,18 @@
 <template>
     <div>
-        <div style="border: 1px solid black; padding: 5px;" :style="offset">
-            {{ item.username }} <br>
-            {{ item.comment }}
+        <div class="card" :style=offset>
+            <div class="card-header">
+                {{ item.created_at }}
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>{{ item.comment }}</p>
+                    <footer class="blockquote-footer"><cite title="Source Title">{{ item.username }}</cite></footer>
+                </blockquote>
+            </div>
         </div>
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="username" class="form-control" placeholder="agaoglumetin" v-model="comment.username">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Enter your comment</label>
-                <textarea class="form-control" rows="3" v-model="comment.comment"></textarea>
-            </div>
-            <a v-on:click="submitComment">Submit your comment</a>
-        </form>
 
-        <template v-if="item.replies">
+    <template v-if="item.replies">
             <comment-tree
                 v-for="reply in item.replies"
                 :key="reply.id"
@@ -58,7 +54,8 @@ export default {
         offset() {
             return {
                 'margin-left': (this.depth * 20) + 'px',
-                'background-color': COLORS[this.depth % COLORS.length],
+                'margin-bottom': '5px'
+                //'background-color': COLORS[this.depth % COLORS.length],
             };
         },
     },
@@ -69,9 +66,6 @@ export default {
         handleBorn() {
             this.nodeCount++;
             this.$emit('born');
-        },
-        submitComment() {
-            console.log(this.comment);
         }
     },
 };
