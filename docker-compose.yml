@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    image: 'metinagaoglu/laravel8-mysql-with-nodejs'
+    build: ./src/
     tty: true
     ports:
       - '8080:8000'
@@ -9,6 +9,14 @@ services:
       - db
     volumes:
       - './src/:/app/'
+    environment:
+      - APP_NAME=Laravel Nested comments
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=my_cool_root_secret
+      - DB_DATABASE=comment_spa
   db:
     image: mariadb
     tty: true
