@@ -61,7 +61,7 @@ For client side
   php artisan serve --host=0.0.0.0
 ```
 
-## Run Locally (automatic with docker composer) (coming soon)
+## Run Locally (automatic with docker composer)
 
 
 ```bash
@@ -90,11 +90,7 @@ To run tests, run the following command
 
 ## Roadmap
 
-- Append comment server-side and client-side
-
-- Make a beatiful design for comments
-
-- Create a auto install bash script for docker compose
 
 - Optimize SQL queries
 
+- Don't use root account for database
