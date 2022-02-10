@@ -12,7 +12,7 @@
             </div>
             <div v-if="replyStatus">
                 <comment-form
-                    :level_of_nested="item.level_of_nested"
+                    :level_of_nested="item.level_of_nested+1"
                     :parent_id="item.id"
                 ></comment-form>
             </div>
@@ -69,6 +69,9 @@ export default {
     },
     mounted() {
         this.$emit('born');
+        this.$root.$on('newComment', () => {
+            this.replyStatus = false
+        })
     },
     methods: {
         handleBorn() {

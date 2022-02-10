@@ -76,6 +76,9 @@
         mounted() {
             this.fetchBlog();
             this.fetchCommentsOfPost();
+            this.$root.$on('newComment', () => {
+                this.fetchCommentsOfPost();
+            })
         },
         data() {
             return {

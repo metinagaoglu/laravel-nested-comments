@@ -41,12 +41,12 @@ export default {
                 username: this.comment.username,
                 comment: this.comment.comment
             }
-            console.log(commentObject);
             axios.post('/api/post/1/comment',commentObject)
                 .then((res) => {
-                    console.log(res);
+                    this.$root.$emit('newComment');
                 })
                 .catch((err) => {
+                    //Handle exception
                     console.log(err);
                 })
 
