@@ -39,11 +39,17 @@ class CommentController extends Controller
         return response()->json($comment)->setStatusCode(201);
     }
 
+    /**
+     * List comments
+     */
     public function index(int $id) {
-        return Comment::where('post_id',$id)
-            ->whereNull('parent_id')
+        $comments =  Comment::where('post_id',$id)
             ->orderBy('created_at','DESC')
-            ->with('replies')
-            ->get();
+            ->withDepth()
+            ->get()
+            ->toTree();
+
+            //return view('welcome');
+        return $comments;
     }
 }

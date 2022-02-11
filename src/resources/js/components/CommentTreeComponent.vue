@@ -19,9 +19,9 @@
             <a @click="replyComment">Reply this</a>
         </div>
 
-    <template v-if="item.replies">
+    <template v-if="item.children">
             <comment-tree
-                v-for="reply in item.replies"
+                v-for="reply in item.children"
                 :key="reply.id"
                 :item="reply"
                 :depth="reply.level_of_nested"
@@ -52,8 +52,8 @@ export default {
     },
     computed: {
         direct() {
-            if (Array.isArray(this.item.replies)) {
-                return this.item.replies.length;
+            if (Array.isArray(this.item.children)) {
+                return this.item.children.length;
             }
 
             return 0;
