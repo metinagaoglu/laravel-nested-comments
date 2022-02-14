@@ -94,3 +94,12 @@ To run tests, run the following command
 - Optimize SQL queries
 
 - Don't use root account for database
+
+
+
+## Useful resource
+
+ - [Nested set model](https://en.wikipedia.org/wiki/Nested_set_model)
+ - [Hierarchical and recursive queries in SQL](https://en.wikipedia.org/wiki/Hierarchical_and_recursive_queries_in_SQL)
+ - [Laravel nestedset](https://github.com/lazychaser/laravel-nestedset)
+
