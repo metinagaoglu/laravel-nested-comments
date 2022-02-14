@@ -71,7 +71,7 @@ For client side
 Go to the project directory
 
 ```bash
-  cd Laravel-Nested-Comment-SPA/src
+  cd Laravel-Nested-Comment-SPA
 ```
 
 ```bash
