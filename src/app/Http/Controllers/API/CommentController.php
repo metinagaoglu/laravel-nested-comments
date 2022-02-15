@@ -22,7 +22,7 @@ class CommentController extends Controller
          */
         $level_of_nested = $request->get('level_of_nested');
         $parentComment = Comment::where('id',$request->get('parent_id'))->first();
-        if ($parentComment->level_of_nested == 2) {
+        if ( $parentComment && $parentComment->level_of_nested == 2) {
             $level_of_nested--;
         }
 

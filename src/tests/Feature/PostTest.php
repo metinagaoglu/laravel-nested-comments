@@ -9,7 +9,7 @@ use Tests\TestCase;
 class PostTest extends TestCase
 {
 
-    public function test_successfully()
+    public function test_fetch_post_successfully()
     {
         $response = $this->get('/api/post/1');
 
