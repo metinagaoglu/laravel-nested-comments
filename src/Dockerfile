@@ -10,10 +10,11 @@ WORKDIR /app
 COPY . .
 COPY .env.example .env
 
+RUN composer update
 RUN php artisan key:generate
+RUN npm install
 RUN npm run dev
 
 EXPOSE 8000
 copy ./setuplaravel.sh /tmp    
 RUN ["chmod", "+x", "/tmp/setuplaravel.sh"]
-ENTRYPOINT ["/tmp/setuplaravel.sh"]
