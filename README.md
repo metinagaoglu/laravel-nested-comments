@@ -93,6 +93,8 @@ To run tests, run the following command
 
 - Optimize SQL queries
 
+- Improve validation
+
 - Don't use root account for database
 
 

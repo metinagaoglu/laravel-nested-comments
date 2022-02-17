@@ -3,22 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
-    public function store(int $id,Request $request)
+    public function store(int $id,CommentRequest $request)
     {
-        $validated = $request->validate([
-            'username' => 'required|max:50',
-            'comment' => 'required',
-            'level_of_nested' => 'required|numeric|between:0,3',
-            'parent_id' => 'required|numeric',
-        ]);
-
         /**
          * Depth server side validation
          */
