@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
@@ -26,17 +28,22 @@ class CommentController extends Controller
             $level_of_nested--;
         }
 
-        $comment = new Comment();
-        $comment->post_id = $id;
-        $comment->username = $request->get('username');
-        $comment->comment = $request->get('comment');
-        $comment->level_of_nested = $level_of_nested;
-        $comment->parent_id = $request->get('parent_id');
-        if( !$comment->save() ) {
-            return response()->json(['message' => 'server error'])->setStatusCode(500);
+        try {
+
+            $comment = Comment::create([
+                'post_id' => $id,
+                'username' =>  $request->get('username'),
+                'comment' =>  $request->get('comment'),
+                'level_of_nested' =>  $level_of_nested,
+                'parent_id' => $request->get('parent_id'),
+            ]);
+
+            return response()->json($comment)->setStatusCode(201);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['message' => 'Server error'])->setStatusCode(500);
         }
 
-        return response()->json($comment)->setStatusCode(201);
     }
 
     /**

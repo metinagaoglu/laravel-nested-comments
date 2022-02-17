@@ -10,6 +10,19 @@ class Comment extends Model
 {
     use HasFactory,NodeTrait;
 
+    /**
+     * The attributes that are mass assignable.
+     * https://laravel.com/docs/8.x/eloquent#mass-assignment
+     * @var array
+     */
+    protected $fillable = [
+        'post_id',
+        'username',
+        'comment',
+        'level_of_nested',
+        'parent_id'
+    ];
+
     public $timestamps = true;
 
     public function subComments() {
