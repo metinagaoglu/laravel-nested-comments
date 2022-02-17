@@ -14,8 +14,8 @@ class CommentController extends Controller
         /**
          * Depth server side validation
          */
-        $level_of_nested = $request->get('level_of_nested');
         $parentComment = Comment::where('id',$request->get('parent_id'))->first();
+        $level_of_nested = $parentComment->level_of_nested + 1;
         if ( $parentComment && $parentComment->level_of_nested == 2) {
             $level_of_nested--;
         }

@@ -26,8 +26,7 @@ class CommentRequest extends FormRequest
         return [
             'username' => 'required|max:50|min:3',
             'comment' => 'required|string|max:250|min:3',
-            'level_of_nested' => 'required|numeric|between:0,3', //TODO: improve this
-            'parent_id' => 'required|numeric', //TODO: improve this
+            'parent_id' => 'required|numeric|exists:comments,id',
         ];
     }
 }
