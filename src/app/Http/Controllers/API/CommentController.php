@@ -12,13 +12,18 @@ class CommentController extends Controller
     public function store(int $id,CommentRequest $request)
     {
         /**
+         * TODO: make a helper function for this!
          * Depth server side validation
          */
         $parentComment = Comment::where('id',$request->get('parent_id'))->first();
-        $level_of_nested = $parentComment->level_of_nested + 1;
-        if ( $parentComment && $parentComment->level_of_nested == 2) {
-            $level_of_nested--;
+        $level_of_nested = 0; // For main comment
+        if ($parentComment != null ) {
+            $level_of_nested = $parentComment->level_of_nested + 1;
+            if ( $parentComment && $parentComment->level_of_nested == 2) {
+                $level_of_nested--;
+            }
         }
+
 
         try {
 

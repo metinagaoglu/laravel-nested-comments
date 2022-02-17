@@ -16,7 +16,7 @@
                     :parent_id="item.id"
                 ></comment-form>
             </div>
-            <a @click="replyComment">Reply this</a>
+            <a @click="replyComment" class="btn btn-secondary">Reply this</a>
         </div>
 
     <template v-if="item.children">

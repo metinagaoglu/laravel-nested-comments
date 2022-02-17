@@ -15,6 +15,17 @@
                     <hr>
                 </article>
 
+                <div>
+                    <div v-if="replyStatus">
+                        <comment-form
+                            :level_of_nested="0"
+                            :parent_id="0"
+                        ></comment-form>
+                    </div>
+                    <a @click="replyComment" class="btn btn-secondary">Reply this</a>
+                    <br>
+                </div>
+
                 <div v-if="this.isCommentLoaded">
                     <comment-tree
                         v-for="reply in this.commentsTree"
@@ -78,6 +89,7 @@
             this.fetchCommentsOfPost();
             this.$root.$on('newComment', () => {
                 this.fetchCommentsOfPost();
+                this.replyStatus = false
             })
         },
         data() {
@@ -85,6 +97,7 @@
                 title: null,
                 content: null,
                 isCommentLoaded: false,
+                replyStatus: false,
                 commentsTree: null,
             }
         },
@@ -110,6 +123,9 @@
                     .catch((err) => {
                         console.log(err);
                     })
+            },
+            replyComment() {
+                this.replyStatus = true
             }
         }
     }

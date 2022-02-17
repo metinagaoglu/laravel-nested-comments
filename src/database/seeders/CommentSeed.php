@@ -19,8 +19,8 @@ class CommentSeed extends Seeder
     {
         $root = new Comment([
             'post_id' => 1,
-            'username' => Str::random(5),
-            'comment' => Str::random(10),
+            'username' => 'John Doe',
+            'comment' => 'Main Node',
             'created_at' => '2022-02-01 10:00:00',
         ]);
         $root->save();
@@ -28,8 +28,8 @@ class CommentSeed extends Seeder
 
         $node1 = new Comment([
             'post_id' => 1,
-            'username' => Str::random(3),
-            'comment' => Str::random(5),
+            'username' => 'Penelope S. Ortiz',
+            'comment' => 'Depth 1',
             'level_of_nested' => 1,
             'parent_id' => 1,
             'created_at' => '2022-02-01 11:00:00',
@@ -39,8 +39,8 @@ class CommentSeed extends Seeder
 
         $node2 = new Comment([
             'post_id' => 1,
-            'username' => Str::random(3),
-            'comment' => Str::random(5),
+            'username' => 'Brent M. Singleton',
+            'comment' => 'Depth 2',
             'level_of_nested' => 1,
             'parent_id' => 1,
             'created_at' => '2022-02-01 11:01:00',
