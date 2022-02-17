@@ -5,25 +5,15 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
     public function store(int $id,CommentRequest $request)
     {
-        /**
-         * TODO: make a helper function for this!
-         * Depth server side validation
-         */
-        $parentComment = Comment::where('id',$request->get('parent_id'))->first();
-        $level_of_nested = 0; // For main comment
-        if ($parentComment != null ) {
-            $level_of_nested = $parentComment->level_of_nested + 1;
-            if ( $parentComment && $parentComment->level_of_nested == 2) {
-                $level_of_nested--;
-            }
-        }
 
+        $level_of_nested = Comment::calculateDepthByParentId((int) $request->get('parent_id'));
 
         try {
 
@@ -45,15 +35,22 @@ class CommentController extends Controller
 
     /**
      * List comments
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse|object
      */
     public function index(int $id) {
-        $comments =  Comment::where('post_id',$id)
-            ->orderBy('created_at','DESC')
-            ->withDepth()
-            ->get()
-            ->toTree();
-
-            //return view('welcome');
-        return $comments;
+        try
+        {
+            return Comment::where('post_id',$id)
+                ->orderBy('created_at','DESC')
+                ->withDepth()
+                ->get()
+                ->toTree();
+        }
+        catch(\Exception $e)
+        {
+            Log::error($e->getMessage());
+            return response()->json(['message' => 'Server error'])->setStatusCode(500);
+        }
     }
 }
