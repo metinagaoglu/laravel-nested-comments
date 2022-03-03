@@ -105,7 +105,8 @@
             fetchBlog() {
                 axios
                     .get("/api/post/1",)
-                    .then((res) => {
+                    .then((response) => {
+                        const res = response.data;
                         this.title = res.data.title;
                         this.content = res.data.content;
                     })
@@ -116,7 +117,8 @@
             fetchCommentsOfPost() {
                 axios
                     .get("/api/post/1/comment",)
-                    .then((res) => {
+                    .then((response) => {
+                        const res = response.data;
                         this.commentsTree = res.data;
                         this.isCommentLoaded = true;
                     })

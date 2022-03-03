@@ -5,11 +5,15 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Traits\ResponsableWithHttp;
+use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends Controller
 {
+    use ResponsableWithHttp;
+
     public function store(int $id,CommentRequest $request)
     {
 
@@ -25,10 +29,10 @@ class CommentController extends Controller
                 'parent_id' => $request->get('parent_id'),
             ]);
 
-            return response()->json($comment)->setStatusCode(201);
+            return $this->respondSucces('Operation Success',$comment,Response::HTTP_CREATED);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return response()->json(['message' => 'Server error'])->setStatusCode(500);
+            return $this->respondError('Server error');
         }
 
     }
@@ -41,16 +45,18 @@ class CommentController extends Controller
     public function index(int $id) {
         try
         {
-            return Comment::where('post_id',$id)
+            $comments = Comment::where('post_id',$id)
                 ->orderBy('created_at','DESC')
                 ->withDepth()
                 ->get()
                 ->toTree();
+
+            return $this->respondSucces('Operation Success',$comments,Response::HTTP_OK);
         }
         catch(\Exception $e)
         {
             Log::error($e->getMessage());
-            return response()->json(['message' => 'Server error'])->setStatusCode(500);
+            return $this->respondError('Server error');
         }
     }
 }
