@@ -16,6 +16,7 @@ trait ResponsableWithHttp {
 
     protected function respondSucces(?string $message = null,$payload = [], $httpStatus = Response::HTTP_OK)
     {
+        $message ??=  __('Operation Success');
         return response([
             'success' => true,
             'data' => $payload,
@@ -25,6 +26,7 @@ trait ResponsableWithHttp {
 
     protected function respondError(?string $message = null,$httpStatus = Response::HTTP_INTERNAL_SERVER_ERROR)
     {
+        $message ??= __('Server fail please try again later.');
         return response([
             'success' => false,
             'data' => [],

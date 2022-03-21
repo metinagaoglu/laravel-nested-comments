@@ -6,20 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Traits\ResponsableWithHttp;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends Controller
 {
     use ResponsableWithHttp;
 
-    public function store(int $id,CommentRequest $request)
+    /**
+     * @param int $id
+     * @param CommentRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(int $id,CommentRequest $request): Response
     {
 
         $level_of_nested = Comment::calculateDepthByParentId((int) $request->get('parent_id'));
 
         try {
-
             $comment = Comment::create([
                 'post_id' => $id,
                 'username' =>  $request->get('username'),
@@ -27,35 +31,26 @@ class CommentController extends Controller
                 'level_of_nested' =>  $level_of_nested,
                 'parent_id' => $request->get('parent_id'),
             ]);
-
-            return $this->respondSucces('Operation Success',$comment,Response::HTTP_CREATED);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            return $this->respondError('Server error');
+        } catch (ModelNotFoundException $e) {
+            return $this->respondError(__('Invalid parent id'),422);
         }
 
+        return $this->respondSucces(payload: $comment,httpStatus: Response::HTTP_CREATED);
     }
 
     /**
-     * List comments
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse|object
+     * @return \Illuminate\Http\Response
      */
-    public function index(int $id) {
-        try
-        {
-            $comments = Comment::where('post_id',$id)
-                ->orderBy('id','DESC')
-                ->withDepth()
-                ->get()
-                ->toTree();
+    public function index(int $id): Response
+    {
+        $comments = Comment::where('post_id',$id)
+            ->orderBy('created_at','DESC')
+            ->withDepth()
+            ->get()
+            ->toTree();
 
-            return $this->respondSucces('Operation Success',$comments,Response::HTTP_OK);
-        }
-        catch(\Exception $e)
-        {
-            Log::error($e->getMessage());
-            return $this->respondError('Server error');
-        }
+        return $this->respondSucces(payload: $comments);
+
     }
 }

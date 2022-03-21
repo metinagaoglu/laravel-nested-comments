@@ -2,11 +2,17 @@
 
 namespace App\Exceptions;
 
+use App\Traits\ResponsableWithHttp;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ResponsableWithHttp;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -36,6 +42,15 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        /**
+         * Query exceptions
+         */
+        $this->renderable(function (QueryException $e,$request) {
+            if ($request->is('api/*')) {
+                return $this->respondError();
+            }
         });
     }
 }
