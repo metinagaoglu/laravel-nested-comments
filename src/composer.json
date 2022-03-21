@@ -11,6 +11,7 @@
         "kalnoy/nestedset": "^6.0",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
+        "laravel/telescope": "^4.8",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4"
     },
@@ -52,7 +53,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {
