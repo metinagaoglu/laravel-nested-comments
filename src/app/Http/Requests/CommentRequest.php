@@ -26,7 +26,7 @@ class CommentRequest extends FormRequest
         return [
             'username' => 'required|max:50|min:3',
             'comment' => 'required|string|max:250|min:3',
-            'parent_id' => 'numeric|exists:comments,id',
+            'parent_id' => 'numeric',
         ];
     }
 }

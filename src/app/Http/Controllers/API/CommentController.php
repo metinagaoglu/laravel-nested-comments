@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Traits\ResponsableWithHttp;
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,7 +45,7 @@ class CommentController extends Controller
         try
         {
             $comments = Comment::where('post_id',$id)
-                ->orderBy('created_at','DESC')
+                ->orderBy('id','DESC')
                 ->withDepth()
                 ->get()
                 ->toTree();
